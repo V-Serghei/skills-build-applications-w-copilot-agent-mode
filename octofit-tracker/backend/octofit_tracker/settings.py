@@ -25,7 +25,14 @@ SECRET_KEY = 'django-insecure-emoc=a3ic=3b(*i!2k)us85fn&=^3j@7j*brp@1v*eb*#s^j*8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+import os
+
+# Allow localhost and codespace URL
+codespace_name = os.environ.get('CODESPACE_NAME')
+allowed_hosts = ['localhost', '127.0.0.1']
+if codespace_name:
+    allowed_hosts.append(f"{codespace_name}-8000.app.github.dev")
+ALLOWED_HOSTS = allowed_hosts
 
 
 # Application definition
@@ -90,6 +97,7 @@ DATABASES = {
     }
 }
 
+AUTH_USER_MODEL = 'octofit_tracker.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
